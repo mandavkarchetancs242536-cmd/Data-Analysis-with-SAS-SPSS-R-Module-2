@@ -1,0 +1,48 @@
+library(dplyr)
+
+
+df <- read.csv("job_market.csv", header = TRUE, stringsAsFactors = TRUE)
+
+print("Column names in dataset:")
+print(colnames(df))
+
+
+df <- df %>%
+  filter(
+    !is.na(job_title),
+    !is.na(salary_min),
+    !is.na(salary_max)
+  )
+
+
+df$job_title <- as.factor(df$job_title)
+df$company <- as.factor(df$company)
+df$location <- as.factor(df$location)
+df$job_type <- as.factor(df$job_type)
+df$category <- as.factor(df$category)
+df$salary_min <- as.numeric(df$salary_min)
+df$salary_max <- as.numeric(df$salary_max)
+df$experience_required <- as.numeric(df$experience_required)
+
+
+df$Salary_Group <- ifelse(
+  df$salary_max < 30000, "Low Salary",
+  ifelse(df$salary_max <= 70000, "Medium Salary", "High Salary")
+)
+df$Salary_Group <- as.factor(df$Salary_Group)
+
+
+print("Salary Group Distribution:")
+print(table(df$Salary_Group))
+
+
+print("Cross-Tabulation: Job Type vs Salary Group")
+jobtype_salary_tab <- table(df$job_type, df$Salary_Group)
+print("Rows = Job Type | Columns = Salary Group")
+print(jobtype_salary_tab)
+
+
+print("Cross-Tabulation: Category vs Salary Group")
+category_salary_tab <- table(df$category, df$Salary_Group)
+print("Rows = Category | Columns = Salary Group")
+print(category_salary_tab)
