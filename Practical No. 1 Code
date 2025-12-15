@@ -1,0 +1,15 @@
+library(dplyr)
+library(psych)
+
+
+df <- read.csv("ENB2012_data.csv")
+
+print("--- Practical 1: Descriptive Statistics ---")
+
+
+print("Summary of Heating Load (Y1):")
+summary(df$Y1)
+
+
+print("Detailed Description of Cooling Load (Y2):")
+describe(df$Y2)
