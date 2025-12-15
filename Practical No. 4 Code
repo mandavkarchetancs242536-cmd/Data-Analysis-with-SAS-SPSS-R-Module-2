@@ -1,0 +1,39 @@
+library(dplyr)
+
+df <- read.csv("youth_unemployment_global.csv", header = TRUE, stringsAsFactors = TRUE)
+
+print("Column names in dataset:")
+print(colnames(df))
+
+
+target_col <- names(df)[ncol(df)]  
+
+
+df <- df %>%
+  filter(!is.na(.data[[target_col]]))
+
+
+df[[target_col]] <- as.numeric(df[[target_col]])
+
+
+print(paste("Summary of", target_col, ":"))
+summary(df[[target_col]])
+
+
+print(paste("One-Sample t-test on", target_col))
+
+t_test_one <- t.test(
+  df[[target_col]],
+  mu = 10   
+)
+
+print(t_test_one)
+
+
+if (t_test_one$p.value < 0.05) {
+  print("Result: Reject the null hypothesis.")
+  print(paste("Conclusion: The average", target_col, "is significantly different from 10%."))
+} else {
+  print("Result: Fail to reject the null hypothesis.")
+  print(paste("Conclusion: The average", target_col, "is not significantly different from 10%."))
+}
