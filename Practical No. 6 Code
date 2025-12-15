@@ -1,0 +1,31 @@
+library(dplyr)
+
+
+df <- read.csv("ai_vs_human_dataset_medium.csv")
+
+
+print("Column names in dataset:")
+print(colnames(df))
+
+
+df <- df %>%
+  filter(
+    !is.na(length_words),
+    !is.na(length_chars)
+  )
+
+
+df$length_words <- as.numeric(df$length_words)
+df$length_chars <- as.numeric(df$length_chars)
+
+cat("\n--- Paired t-test: Length (Characters vs Words) ---\n")
+
+
+paired_t_test <- t.test(
+  df$length_chars,
+  df$length_words,
+  paired = TRUE
+)
+
+
+print(paired_t_test)
