@@ -1,0 +1,35 @@
+library(dplyr)
+
+df <- read.csv("dataset_2191_sleep (1).csv")
+
+str(df)
+colnames(df)
+
+
+body_weight_counts <- table(df$body_weight)
+brain_weight_counts <- table(df$brain_weight)
+total_sleep_counts <- table(df$total_sleep)
+
+print("Frequency Table: Body Weight")
+print(body_weight_counts)
+
+print("Frequency Table: Brain Weight")
+print(brain_weight_counts)
+
+print("Frequency Table: Total Sleep")
+print(total_sleep_counts)
+
+
+
+body_weight_df <- df %>% count(body_weight)
+brain_weight_df <- df %>% count(brain_weight)
+total_sleep_df <- df %>% count(total_sleep)
+
+print("Body Weight Frequency (Data Frame Format)")
+print(body_weight_df)
+
+print("Brain Weight Frequency (Data Frame Format)")
+print(brain_weight_df)
+
+print("Total Sleep Frequency (Data Frame Format)")
+print(total_sleep_df)
