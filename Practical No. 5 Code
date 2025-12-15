@@ -1,0 +1,24 @@
+library(dplyr)
+
+
+df <- read.csv("electricity.csv")
+
+
+print(colnames(df))
+
+
+df$class <- as.factor(df$class)
+df$nswprice <- as.numeric(df$nswprice)
+
+
+df <- df %>%
+  filter(!is.na(nswprice), !is.na(class))
+
+cat("\n--- Independent Two-Sample t-test ---\n")
+
+
+t_test_result <- t.test(nswprice ~ class, data = df)
+
+
+print(t_test_result)
+
