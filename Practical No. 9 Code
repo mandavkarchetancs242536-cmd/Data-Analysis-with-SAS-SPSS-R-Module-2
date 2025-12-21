@@ -1,0 +1,18 @@
+library(dplyr)
+
+df <- read.csv("data.csv")
+
+
+str(df)
+
+
+table_city_furnishing <- table(df$city, df$furnishing)
+
+
+table_city_furnishing
+
+
+chi_result <- chisq.test(table_city_furnishing)
+
+chi_result
+
