@@ -1,0 +1,18 @@
+library(dplyr)
+
+
+df <- read.csv("future_jobs_dataset.csv")
+
+
+str(df)
+
+
+df$industry <- as.factor(df$industry)
+df$company_size <- as.factor(df$company_size)
+
+
+anova_model <- aov(salary_usd ~ industry * company_size, data = df)
+
+
+summary(anova_model)
+
