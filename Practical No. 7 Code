@@ -1,0 +1,17 @@
+library(dplyr)
+
+
+df <- read.csv("Updated Quality of Life Data.csv")
+
+
+str(df)
+
+
+df$occupation_type <- as.factor(df$occupation_type)
+
+
+anova_model <- aov(avg_sleep_hours_per_day ~ occupation_type, data = df)
+
+
+summary(anova_model)
+
