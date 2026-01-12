@@ -1,0 +1,27 @@
+library(ggplot2)
+
+
+student_data <- read.csv("student_academic_placement_performance_dataset.csv")
+
+
+colnames(student_data)
+
+
+ggplot(student_data, aes(x = degree_percentage)) +
+  geom_histogram(bins = 10) +
+  labs(
+    title = "Histogram of Degree Percentage",
+    x = "Degree Percentage",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+
+
+ggplot(student_data, aes(x = placement_status, y = degree_percentage)) +
+  geom_boxplot() +
+  labs(
+    title = "Box Plot of Degree Percentage by Placement Status",
+    x = "Placement Status",
+    y = "Degree Percentage"
+  ) +
+  theme_minimal()
