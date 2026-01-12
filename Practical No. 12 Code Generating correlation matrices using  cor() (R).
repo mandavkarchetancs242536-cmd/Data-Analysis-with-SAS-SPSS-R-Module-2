@@ -1,0 +1,17 @@
+quality_data <- read.csv("updated_quality_of_life_2024.csv")
+
+
+head(quality_data)
+
+
+colnames(quality_data)
+
+
+numeric_data <- quality_data[sapply(quality_data, is.numeric)]
+
+
+correlation_matrix <- cor(numeric_data, use = "complete.obs")
+
+
+print(correlation_matrix)
+
