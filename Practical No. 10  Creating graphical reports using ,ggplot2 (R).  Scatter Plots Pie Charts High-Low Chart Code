@@ -1,0 +1,41 @@
+library(ggplot2)
+
+
+student_data <- read.csv("student-mat.csv")
+
+
+head(student_data)
+
+
+ggplot(student_data, aes(x = G1, y = G3)) +
+  geom_point() +
+  labs(
+    title = "Scatter Plot of G1 vs G3",
+    x = "Grade 1",
+    y = "Final Grade (G3)"
+  ) +
+  theme_minimal()
+
+
+gender_count <- table(student_data$sex)
+gender_df <- as.data.frame(gender_count)
+
+ggplot(gender_df, aes(x = "", y = Freq, fill = Var1)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y") +
+  labs(
+    title = "Gender Distribution of Students",
+    fill = "Gender"
+  ) +
+  theme_void()
+
+
+ggplot(student_data, aes(x = factor(seq_along(G1)))) +
+  geom_linerange(aes(ymin = G1, ymax = G3)) +
+  labs(
+    title = "High-Low Chart of Student Grades (G1 to G3)",
+    x = "Students",
+    y = "Grade Range"
+  ) +
+  theme_minimal()
+
