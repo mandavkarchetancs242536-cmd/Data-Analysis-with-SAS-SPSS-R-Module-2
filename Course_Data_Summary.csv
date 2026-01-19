@@ -1,0 +1,61 @@
+"","Var1","Var2","Freq"
+"1","","  User_ID","Length:500        "
+"2","","  User_ID","Class :character  "
+"3","","  User_ID","Mode  :character  "
+"4","","  User_ID",NA
+"5","","  User_ID",NA
+"6","","  User_ID",NA
+"7","","Experience_Level","Length:500        "
+"8","","Experience_Level","Class :character  "
+"9","","Experience_Level","Mode  :character  "
+"10","","Experience_Level",NA
+"11","","Experience_Level",NA
+"12","","Experience_Level",NA
+"13","","Course_Type","Length:500        "
+"14","","Course_Type","Class :character  "
+"15","","Course_Type","Mode  :character  "
+"16","","Course_Type",NA
+"17","","Course_Type",NA
+"18","","Course_Type",NA
+"19","","  Platform","Length:500        "
+"20","","  Platform","Class :character  "
+"21","","  Platform","Mode  :character  "
+"22","","  Platform",NA
+"23","","  Platform",NA
+"24","","  Platform",NA
+"25","","Hours_Spent_Per_Week","Min.   : 1.00  "
+"26","","Hours_Spent_Per_Week","1st Qu.: 6.00  "
+"27","","Hours_Spent_Per_Week","Median :11.00  "
+"28","","Hours_Spent_Per_Week","Mean   :10.56  "
+"29","","Hours_Spent_Per_Week","3rd Qu.:15.00  "
+"30","","Hours_Spent_Per_Week","Max.   :20.00  "
+"31","","Course_Duration_Weeks","Min.   : 2.00  "
+"32","","Course_Duration_Weeks","1st Qu.: 8.00  "
+"33","","Course_Duration_Weeks","Median :13.50  "
+"34","","Course_Duration_Weeks","Mean   :13.26  "
+"35","","Course_Duration_Weeks","3rd Qu.:19.00  "
+"36","","Course_Duration_Weeks","Max.   :24.00  "
+"37","","Completion_Status","Length:500        "
+"38","","Completion_Status","Class :character  "
+"39","","Completion_Status","Mode  :character  "
+"40","","Completion_Status",NA
+"41","","Completion_Status",NA
+"42","","Completion_Status",NA
+"43","","Completion_Percentage","Min.   :  5.00  "
+"44","","Completion_Percentage","1st Qu.: 30.75  "
+"45","","Completion_Percentage","Median : 46.00  "
+"46","","Completion_Percentage","Mean   : 50.48  "
+"47","","Completion_Percentage","3rd Qu.: 73.00  "
+"48","","Completion_Percentage","Max.   :100.00  "
+"49","","Dropout_Reason","Length:500        "
+"50","","Dropout_Reason","Class :character  "
+"51","","Dropout_Reason","Mode  :character  "
+"52","","Dropout_Reason",NA
+"53","","Dropout_Reason",NA
+"54","","Dropout_Reason",NA
+"55","","Satisfaction_Score","Min.   :1.000  "
+"56","","Satisfaction_Score","1st Qu.:2.000  "
+"57","","Satisfaction_Score","Median :3.000  "
+"58","","Satisfaction_Score","Mean   :3.022  "
+"59","","Satisfaction_Score","3rd Qu.:4.000  "
+"60","","Satisfaction_Score","Max.   :5.000  "
