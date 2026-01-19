@@ -1,0 +1,32 @@
+credit_data <- read.csv("Credit_Card_Applications.csv")
+
+
+credit_data$Class <- as.factor(credit_data$Class)
+
+
+log_model <- glm(Class ~ A2 + A3 + A7 + A10 + A13,
+                 data = credit_data,
+                 family = binomial)
+
+
+summary(log_model)
+
+
+probabilities <- predict(log_model, type = "response")
+
+
+plot(credit_data$A2, credit_data$Class,
+     main = "Logistic Regression Curve (A2 vs Class)",
+     xlab = "A2",
+     ylab = "Class (0/1)",
+     pch = 16)
+
+ord <- order(credit_data$A2)
+lines(credit_data$A2[ord], probabilities[ord], col = "red", lwd = 2)
+
+
+plot(probabilities,
+     main = "Predicted Probabilities from Logistic Regression",
+     ylab = "Probability",
+     xlab = "Observations")
+abline(h = 0.5, col = "blue")
