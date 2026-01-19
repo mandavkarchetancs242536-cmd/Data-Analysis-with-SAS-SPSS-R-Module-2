@@ -1,0 +1,20 @@
+wine_data <- read.csv("Wine dataset.csv")
+
+
+wine_20 <- wine_data[1:20, ]
+
+
+model <- lm(Alcohol ~ Ash + Magnesium + Total.phenols + Flavanoids, data = wine_20)
+
+
+summary(model)
+
+
+predicted_values <- predict(model)
+
+
+plot(wine_20$Alcohol, predicted_values,
+     main = "Actual vs Predicted Alcohol (20 Records)",
+     xlab = "Actual Alcohol",
+     ylab = "Predicted Alcohol")
+abline(0, 1, col = "red")
