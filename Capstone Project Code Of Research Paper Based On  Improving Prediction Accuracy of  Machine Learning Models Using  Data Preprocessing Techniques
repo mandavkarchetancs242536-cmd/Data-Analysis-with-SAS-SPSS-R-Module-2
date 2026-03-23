@@ -1,0 +1,136 @@
+install.packages("caret")
+install.packages("e1071")
+install.packages("ggplot2")
+install.packages("pROC")
+install.packages("dplyr")
+install.packages("smotefamily")
+
+
+library(caret)
+library(e1071)
+library(ggplot2)
+library(pROC)
+library(dplyr)
+library(smotefamily)
+
+
+data <- read.csv("heart.csv")
+
+
+data$target <- as.factor(data$target)
+
+
+set.seed(123)
+
+trainIndex <- createDataPartition(data$target, p = 0.7, list = FALSE)
+train <- data[trainIndex, ]
+test  <- data[-trainIndex, ]
+
+
+model_raw <- svm(target ~ ., data = train, probability = TRUE)
+
+pred_raw <- predict(model_raw, test, probability = TRUE)
+
+cm_raw <- confusionMatrix(pred_raw, test$target)
+
+accuracy_raw <- as.numeric(cm_raw$overall["Accuracy"])
+
+cat("\nAccuracy WITHOUT Preprocessing:", round(accuracy_raw,3), "\n")
+
+
+
+preProc_impute <- preProcess(train, method = "medianImpute")
+train_imputed <- predict(preProc_impute, train)
+test_imputed  <- predict(preProc_impute, test)
+
+
+preProc_scale <- preProcess(train_imputed, method = c("center", "scale"))
+train_scaled <- predict(preProc_scale, train_imputed)
+test_scaled  <- predict(preProc_scale, test_imputed)
+
+
+train_x <- train_scaled[, colnames(train_scaled) != "target"]
+train_y <- train_scaled$target
+
+
+train_y_num <- as.numeric(as.character(train_y))
+
+
+smote_output <- SMOTE(train_x, train_y_num, K = 5)
+
+train_balanced <- smote_output$data
+colnames(train_balanced)[ncol(train_balanced)] <- "target"
+
+
+train_balanced$target <- as.factor(train_balanced$target)
+
+
+model_processed <- svm(target ~ ., 
+                       data = train_balanced, 
+                       probability = TRUE)
+
+pred_processed <- predict(model_processed, 
+                          test_scaled, 
+                          probability = TRUE)
+
+cm_processed <- confusionMatrix(pred_processed, test_scaled$target)
+
+accuracy_processed <- as.numeric(cm_processed$overall["Accuracy"])
+
+cat("Accuracy WITH Preprocessing:", round(accuracy_processed,3), "\n")
+
+
+
+accuracy_df <- data.frame(
+  Model = c("Raw Data", "Preprocessed Data"),
+  Accuracy = c(accuracy_raw, accuracy_processed)
+)
+
+ggplot(accuracy_df, aes(x = Model, y = Accuracy, fill = Model)) +
+  geom_bar(stat = "identity", width = 0.6) +
+  coord_cartesian(ylim = c(0,1)) +
+  geom_text(aes(label = round(Accuracy,3)), 
+            vjust = -0.5, size = 5) +
+  ggtitle("Impact of Data Preprocessing on Prediction Accuracy") +
+  ylab("Accuracy") +
+  xlab("Model") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+
+
+prob_raw <- attr(pred_raw, "probabilities")[,2]
+
+roc_raw <- roc(response = test$target,
+               predictor = prob_raw,
+               levels = c("0","1"),
+               direction = "<")
+
+
+prob_processed <- attr(pred_processed, "probabilities")[,2]
+
+roc_processed <- roc(response = test_scaled$target,
+                     predictor = prob_processed,
+                     levels = c("0","1"),
+                     direction = "<")
+
+
+plot(roc_raw, col="red", main="ROC Curve Comparison")
+plot(roc_processed, col="blue", add=TRUE)
+
+legend("bottomright",
+       legend=c("Raw Data","Preprocessed Data"),
+       col=c("red","blue"),
+       lwd=2)
+
+cat("\nAUC Raw:", round(auc(roc_raw),3), "\n")
+cat("AUC Processed:", round(auc(roc_processed),3), "\n")
+
+
+
+cat("\nConfusion Matrix - Raw Data\n")
+print(cm_raw)
+
+cat("\nConfusion Matrix - Preprocessed Data\n")
+print(cm_processed)
+
